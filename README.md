@@ -1,2 +1,2 @@
 # duck
- A Node.js API for API servers.
+ A Node.js framework for API servers.

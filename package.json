@@ -1,7 +1,7 @@
 {
   "name": "duck",
   "version": "0.1.0",
-  "description": "A dynamic Node.js API for API servers.",
+  "description": "A dynamic Node.js framework for API servers.",
   "main": "core.js",
   "dependencies": {
     "http": "^0.0.1-security"
