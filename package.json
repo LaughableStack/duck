@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vrbos/api.git"
+    "url": "git+https://github.com/LaughableStack/duck/api.git"
   },
   "keywords": [
     "api",
@@ -22,7 +22,7 @@
   "author": "LaughableStack + notU",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vrbos/api/issues"
+    "url": "https://github.com/LaughableStack/duck/duck.git"
   },
-  "homepage": "https://github.com/vrbos/api#readme"
+  "homepage": "https://github.com/LaughableStack/duck#readme"
 }
