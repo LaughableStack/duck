@@ -33,9 +33,12 @@ module.exports.duckServer = class duckServer {
         });
         req.on('end', async () => {
             let data = JSON.parse(reqStream);
-            let activeAPI = data.token ? await this.userAPI(this.context, data.token) : this.anonAPI;
-            let result = await activeAPI[data.method](data.content);
+            let result = await this.apiHandle(data.token, data.method, data.content);
             res.end(JSON.stringify(result));
         });
+    }
+    async apiHandle(token, method, content) {
+        let activeAPI = token ? await this.userAPI(this.context, token) : this.anonAPI;
+        return await activeAPI[method](content);
     }
 }
