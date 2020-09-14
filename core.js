@@ -9,27 +9,28 @@ module.exports.duckServer = class duckServer {
         watchdog = req => {accepted: true},
         errorProcessor = error => error
     ) {
-        this.context = context
-        this.tokenAPI = tokenAPI
-        this.anonAPI = anonAPI
-        this.watchdog = watchdog
-        // init function
+        this.context = context;
+        this.tokenAPI = tokenAPI;
+        this.anonAPI = anonAPI;
+        this.watchdog = watchdog;
+        if (port==-1) return;
+        // initialize server on port
         this.server = http.createServer((req,res) => {
             try {
-                this.handle(req,res)
+                this.handle(req,res);
             }
             catch(error) {
-                res.end(errorProcessor(error))
+                res.end(errorProcessor(error));
             }});
         this.server.listen(parseInt(port));
     }
 
     async handle(req, res) {
-        let report = this.watchdog(req)
-        if (!report.accepted) return res.send(report.error)
+        let report = this.watchdog(req);
+        if (!report.accepted) return res.send(report.error);
         let reqStream = [];
         req.on('data', (chunkData) => {
-          reqStream.push(chunkData)
+          reqStream.push(chunkData);
         });
         req.on('end', async () => {
             let data = JSON.parse(reqStream);
