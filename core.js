@@ -2,17 +2,18 @@ const http = require('http')
 
 module.exports.duckServer = class duckServer {
     constructor(
-        port = 3735, 
-        context = {}, 
         tokenAPI, 
         anonAPI, 
-        watchdog = req => {accepted: true},
+        port = 3735, 
+        context = {}, 
+        watchdog = req => Object({accepted: true}),
         errorProcessor = error => error
     ) {
         this.context = context;
         this.tokenAPI = tokenAPI;
         this.anonAPI = anonAPI;
         this.watchdog = watchdog;
+        this.duck = true;
         if (port==-1) return;
         // initialize server on port
         this.server = http.createServer((req,res) => {
@@ -34,12 +35,12 @@ module.exports.duckServer = class duckServer {
         });
         req.on('end', async () => {
             let data = JSON.parse(reqStream);
-            let result = await this.apiHandle(data.token, data.method, data.content);
+            let result = await this.apiHandle(data);
             res.end(JSON.stringify(result));
         });
     }
-    async apiHandle(token, method, content) {
-        let activeAPI = token ? await this.userAPI(this.context, token) : this.anonAPI;
-        return await activeAPI[method](content);
+    async apiHandle(data) {
+        let activeAPI = data.token ? await this.userAPI(this.context, data.token) : this.anonAPI(this.context);
+        return await activeAPI[data.method](data.content);
     }
 }
